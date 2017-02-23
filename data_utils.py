@@ -51,6 +51,12 @@ paragraph_start = "PARAGRAPH_START" # Use split on (\n or \n\n) for this?
 paragraph_end = "PARAGRAPH_END"
 story_start = "STORY_START"
 story_end = "STORY_END"
+# Dataset parameters
+vocabulary = []
+word_to_index = []
+index_to_word = []
+x_train = []
+y_train = []
 
 def createDir(dirPath):
     """
@@ -155,29 +161,88 @@ def tokenize_sentences():
     sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
 # End of tokenize_sentences()
 
-print("Obtaining word frequency distribution...")
-word_freq = nltk.FreqDist(itertools.chain(*tokenized_sentences))
-print("Found %d unique words." % len(word_freq.items()))
+def create_sentence_dataset(vocab_size=8000):
+    """
+    Creates a dataset using the tokenized sentences.
 
-# Building word-to-index and index-to-word vectors/dictionaries
-vocabulary = word_freq.most_common(vocabulary_size - 1)
-index_to_word = [word[0] for word in vocabulary]
-index_to_word.append(unknown_token)
-word_to_index = dict((word, index)
-                     for index, word in enumerate(index_to_word))
+    :type vocab_size: int
+    :param vocab_size: the size of the vocabulary for this dataset. Defaults to
+                       8000
+    """
+    global log
+    global vocabulary
+    global sentences
+    global index_to_word
+    global word_to_index
+    global unknown
+    global x_train
+    global y_train
 
-print("Replacing all words not in vocabulary with unkown token...")
-for index, sent in enumerate(tokenized_sentences):
-    tokenized_sentences[index] = [
-        word if word in word_to_index else unknown_token for word in sent]
+    log.info("Obtaining word frequency disribution.")
+    word_freq = nltk.FreqDist(itertools.chain(*tokenized_sentences))
+    log.info("Found %d unique words." % len(word_freq.items()))
 
-print("Creating training data...")
-x_train = np.asarray([[word_to_index[word] for word in sent[:-1]]
-                     for sent in tokenized_sentences])
-y_train = np.asarray([[word_to_index[word] for word in sent[1:]]
-                     for sent in tokenized_sentences])
+    vocabulary = word_freq.most_common(vocab_size - 1)
+    index_to_word = [word[0] for word in vocabulary]
+    index_to_word.append(unknown)
+    word_to_ndex = dict((word, index)
+                        for index, word in enumerate(index_to_word))
 
-path = input("Enter the name of the file you wish to save the data as: ")
-with open(path, "wb") as dataset_file:
-    cPickle.dump((vocabulary, index_to_word, word_to_index, x_train, y_train),
-                 dataset_file, protocol=2)
+    log.info("Replace all words not in vocabulary with unkown token.")
+    for index, sentence in enumerate(sentences):
+        sentences[index] = [word if word in word_to_index
+                            else unknown for word in sentence]
+
+    log.info("Creating training data.")
+    x_train = np.asarray([[word_to_index[word] for word in sentence[:-1]]
+                         for sentence in sentences])
+    x_train = np.asarray([[word_to_index[word] for word in sentence[:-1]]
+                         for sentence in sentences])
+# End of create_dataset()
+
+def save_dataset(path=None, filename=None):
+    """
+    Saves the created dataset to a specified file.
+
+    :type path: string
+    :param path: the path to the saved dataset file.
+    """
+    global x_train
+    global y_train
+    global index_to_word
+    global word_to_index
+    global vocabulary
+
+    if path is None:
+        path = input("Enter the path to the file where the dataset will"
+                     " be stored: ")
+    if filename is None:
+        name = input("Enter the name of the file the dataset should be"
+                     " saved as: ")
+
+    createDir(path)
+    with open(path + "/" + filename, "wb") as dataset_file:
+        cPickle.dump((vocabulary, index_to_word, word_to_index, x_train,
+                     y_train), dataset_file, protocol=2)
+# End of save_dataset()
+
+def parse_arguments():
+    """
+    Parses command-line arguments and returns the array of arguments.
+
+    :type return: list
+    :param return: list of parsed command-line arguments
+    """
+    arg_parse = argparse.ArgumentParser()
+    arg_parse.add_argument("-v", "--vocab_size", default=8000, type=int,
+                           help="The size of the dataset vocabulary.")
+    arg_parse.add_argument("-n", "--num_examples", default=-1, type=int,
+                           help="The number of examples to be saved.")
+    arg_parse.add_argument("-s", "--source_path",
+                           help="The source path to the data.")
+    arg_parse.add_argument("-d", "--dest_path",
+                           help="The destination path for the dataset.")
+    arg_parse.add_argument("-t", "--source_type", default="csv",
+                           help="The type of source data [currently only "
+                                "the csv data size is supported].")
+if __name__ == "__main__":
