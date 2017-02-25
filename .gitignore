@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.txt
+*.c
+*.o
+*[23].py
+embedrnn/
+grurnn/
+rmsrnn/
+Vanilla/
