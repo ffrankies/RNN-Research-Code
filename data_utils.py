@@ -136,7 +136,8 @@ def read_csv(path=None, max=None):
             if len(item) > 0 and len(item[0]) > 0:
                 comments.append(item[0])
                 num_saved += 1
-                if (not max is None) and num_saved > max:
+                if (not max is None) and num_saved >= max:
+                    num_seen += 1
                     log.info("Gone over %d examples, saved %d of them" %
                              (num_seen, num_saved))
                     break
@@ -145,7 +146,7 @@ def read_csv(path=None, max=None):
                  (num_seen, num_saved))
 # End of read_csv()
 
-def tokenize_sentences():
+def tokenize_sentences(num_sentences=None):
     """
     Uses the nltk library to break comments down into sentences, and then
     tokenizes the words in the sentences. Also appends the sentence start and
@@ -163,14 +164,17 @@ def tokenize_sentences():
     sentences = list(sentences)
     log.info("%d sentences found in dataset." % len(sentences))
 
+    if (not num_sentences is None) and num_sentences < len(sentences):
+        log.info("Reducing number of sentences to %d" % num_sentences)
+        sentences = sentences[:num_sentences]
+
     log.info("Adding sentence start and end tokens to sentences.")
-    for sentence in sentences:
-        sentence = ["%s %s %s" % (sentence_start, sentence, sentence_end)]
+    sentences = ["%s %s %s" % (sentence_start, sentence, sentence_end)
+                 for sentence in sentences]
 
     log.info("Tokenizing words in sentences.")
     sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
     sentences = list(sentences)
-    log.info("%s\n" % sentence for sentence in sentences[:20])
 # End of tokenize_sentences()
 
 def create_sentence_dataset(vocab_size=8000):
@@ -197,7 +201,7 @@ def create_sentence_dataset(vocab_size=8000):
     vocabulary = word_freq.most_common(vocab_size - 1)
     index_to_word = [word[0] for word in vocabulary]
     index_to_word.append(unknown)
-    word_to_ndex = dict((word, index)
+    word_to_index = dict((word, index)
                         for index, word in enumerate(index_to_word))
 
     log.info("Replace all words not in vocabulary with unkown token.")
@@ -208,7 +212,7 @@ def create_sentence_dataset(vocab_size=8000):
     log.info("Creating training data.")
     x_train = np.asarray([[word_to_index[word] for word in sentence[:-1]]
                          for sentence in sentences])
-    x_train = np.asarray([[word_to_index[word] for word in sentence[:-1]]
+    y_train = np.asarray([[word_to_index[word] for word in sentence[1:]]
                          for sentence in sentences])
 # End of create_dataset()
 
@@ -238,6 +242,35 @@ def save_dataset(path=None, filename=None):
                      y_train), dataset_file, protocol=2)
 # End of save_dataset()
 
+def load_dataset(path=None):
+    """
+    Loads a saved dataset so that it can be checked for correctness.
+
+    :type path: string
+    :param path: the path to the dataset
+    """
+    global log
+
+    if path is None:
+        path = input("Enter the path to the saved dataset: ")
+
+    log.info("Loading saved dataset.")
+    with open(path, "rb") as dataset_file:
+        data = cPickle.load(dataset_file)
+        vocabulary = data[0]
+        index_to_word = data[1]
+        word_to_index = data[2]
+        x_train = data[3]
+        y_train = data[4]
+
+        log.info("Size of vocabulary is: %d" % len(vocabulary))
+        log.info("Some words from vocabulary: %s" % index_to_word[:100])
+        log.info("Number of examples: %d" % len(x_train))
+        log.info("Sample training data: %s\n%s" % (x_train[:10], y_train[:10]))
+
+        return data
+# End of load_dataset()
+
 def parse_arguments():
     """
     Parses command-line arguments and returns the array of arguments.
@@ -248,8 +281,10 @@ def parse_arguments():
     arg_parse = argparse.ArgumentParser()
     arg_parse.add_argument("-v", "--vocab_size", default=8000, type=int,
                            help="The size of the dataset vocabulary.")
-    arg_parse.add_argument("-n", "--num_examples", type=int,
-                           help="The number of examples to be saved.")
+    arg_parse.add_argument("-c", "--num_comments", type=int,
+                           help="The number of comments to be read.")
+    arg_parse.add_argument("-n", "--num_sentences", type=int,
+                           help="The number of sentence examples to be saved.")
     arg_parse.add_argument("-s", "--source_path",
                            help="The source path to the data.")
     arg_parse.add_argument("-d", "--dest_path",
@@ -263,6 +298,8 @@ def parse_arguments():
                            help="The logging directory.")
     arg_parse.add_argument("-l", "--log_name", default='DATA',
                            help="The name of the logger to be used.")
+    arg_parse.add_argument("-e", "--test", action="store_true",
+                           help="Specify if this is just a test run.")
     return arg_parse.parse_args()
 # End of parse_arguments()
 
@@ -270,7 +307,9 @@ if __name__ == "__main__":
     args = parse_arguments()
     set_up_logging(args.log_name, args.log_dir)
     if args.source_type == "csv":
-        read_csv(args.source_path, args.num_examples)
-    tokenize_sentences()
+        read_csv(args.source_path, args.num_comments)
+    tokenize_sentences(args.num_sentences)
     create_sentence_dataset(args.vocab_size)
     save_dataset(args.dest_path, args.dest_name)
+    if args.test:
+        load_dataset(args.dest_path + "/" + args.dest_name)
