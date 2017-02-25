@@ -107,7 +107,7 @@ def set_up_logging(name='DATA', dir='logging'):
     log.info("Set up logging for data formatting session.")
 # End of set_up_logging()
 
-def read_csv(path=None):
+def read_csv(path=None, max=None):
     """
     Reads the given csv file and extracts data from it into the comments array.
     Empty data cells are not included in the output.
@@ -131,6 +131,10 @@ def read_csv(path=None):
             if len(item) > 0 and len(item[0]) > 0:
                 comments.append(item[0])
                 num_saved += 1
+                if max is not None and num_saved > max:
+                    log.info("Gone over %d examples, saved %d of them" %
+                             (num_seen, num_saved))
+                    break
             num_seen += 1
         log.info("Gone over %d examples, saved %d of them" %
                  (num_seen, num_saved))
@@ -242,7 +246,23 @@ def parse_arguments():
                            help="The source path to the data.")
     arg_parse.add_argument("-d", "--dest_path",
                            help="The destination path for the dataset.")
+    arg_parse.add_argument("-f", "--dest_name",
+                           help="The name of the dataset file.")
     arg_parse.add_argument("-t", "--source_type", default="csv",
                            help="The type of source data [currently only "
                                 "the csv data size is supported].")
+    arg_parse.add_argument("-p", "--log_dir", default='logging',
+                           help="The logging directory.")
+    arg_parse.add_argument("-l", "--log_name", default='DATA',
+                           help="The name of the logger to be used.")
+    return arg_parse.parse_args()
+# End of parse_arguments()
+
 if __name__ == "__main__":
+    args = parse_arguments()
+    set_up_logging(args.log_name, args.log_dir)
+    if args.source_type == "csv":
+        read_csv(args.source_path, args.num_examples)
+    tokenize_sentences()
+    create_sentence_dataset(args.vocab_size)
+    save_dataset(args.dest_path, args.dest_name)
