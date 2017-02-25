@@ -25,6 +25,7 @@ try:
 except Exception:
     import cPickle
 import os
+import io
 import numpy as np
 import operator
 import csv
@@ -121,17 +122,21 @@ def read_csv(path=None, max=None):
     if path is None:
         path = input("Enter path to the scv data file: ")
 
+    # Encoding breaks when using python2.7 for some reason.
     log.info("Reading the csv data file at: %s" % path)
     with open(path, "r", encoding='utf-8') as datafile:
         reader = csv.reader(datafile, skipinitialspace=True)
-        reader.__next__() # Skips over table heading
+        try:
+            reader.__next__() # Skips over table heading in Python 3.2+
+        except Exception:
+            reader.next() # For older versions of Python
         num_seen = 0
         num_saved = 0
         for item in reader:
             if len(item) > 0 and len(item[0]) > 0:
                 comments.append(item[0])
                 num_saved += 1
-                if max is not None and num_saved > max:
+                if (not max is None) and num_saved > max:
                     log.info("Gone over %d examples, saved %d of them" %
                              (num_seen, num_saved))
                     break
@@ -155,14 +160,17 @@ def tokenize_sentences():
     log.info("Breaking comments down into sentences.")
     sentences = itertools.chain(
         *[nltk.sent_tokenize(comment.lower()) for comment in comments])
+    sentences = list(sentences)
     log.info("%d sentences found in dataset." % len(sentences))
 
     log.info("Adding sentence start and end tokens to sentences.")
-    sentences = ["%s %s %s" % (sentence_start, sentence, sentence_end)
-                 for sentence in sentences]
+    for sentence in sentences:
+        sentence = ["%s %s %s" % (sentence_start, sentence, sentence_end)]
 
     log.info("Tokenizing words in sentences.")
     sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+    sentences = list(sentences)
+    log.info("%s\n" % sentence for sentence in sentences[:20])
 # End of tokenize_sentences()
 
 def create_sentence_dataset(vocab_size=8000):
@@ -183,7 +191,7 @@ def create_sentence_dataset(vocab_size=8000):
     global y_train
 
     log.info("Obtaining word frequency disribution.")
-    word_freq = nltk.FreqDist(itertools.chain(*tokenized_sentences))
+    word_freq = nltk.FreqDist(itertools.chain(*sentences))
     log.info("Found %d unique words." % len(word_freq.items()))
 
     vocabulary = word_freq.most_common(vocab_size - 1)
@@ -240,7 +248,7 @@ def parse_arguments():
     arg_parse = argparse.ArgumentParser()
     arg_parse.add_argument("-v", "--vocab_size", default=8000, type=int,
                            help="The size of the dataset vocabulary.")
-    arg_parse.add_argument("-n", "--num_examples", default=-1, type=int,
+    arg_parse.add_argument("-n", "--num_examples", type=int,
                            help="The number of examples to be saved.")
     arg_parse.add_argument("-s", "--source_path",
                            help="The source path to the data.")

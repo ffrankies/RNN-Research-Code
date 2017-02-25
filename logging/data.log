@@ -1,0 +1,258 @@
+2017-02-25 12:23:02,125-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:23:02,125-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:26:25,728-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:26:25,728-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:26:36,385-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:26:36,385-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:26:54,145-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:26:54,145-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:28:50,681-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:28:50,682-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:30:30,585-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:30:30,585-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:30:30,596-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:30:30,605-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:30:30,606-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:46:51,593-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:46:51,593-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:46:51,595-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:46:51,596-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:46:51,596-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:51:53,831-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:51:53,831-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:51:53,833-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:51:53,833-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:51:53,834-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:53:22,016-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:53:22,016-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:53:22,018-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:53:22,018-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:53:22,019-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:53:22,051-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:53:22,051-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:53:22,052-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:53:22,052-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:54:19,347-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:54:19,347-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:54:19,348-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:54:19,348-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:54:19,349-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:54:19,373-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:54:19,374-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:54:19,374-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:54:19,375-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:54:19,376-DATA-INFO-Found 0 unique words.
+2017-02-25 12:54:19,376-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 12:54:19,377-DATA-INFO-Creating training data.
+2017-02-25 12:55:01,946-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:55:01,946-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:55:01,948-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:55:01,948-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:55:01,949-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:55:01,974-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:55:01,974-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:55:01,975-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:55:01,976-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:55:01,976-DATA-INFO-Found 0 unique words.
+2017-02-25 12:55:01,977-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 12:55:01,978-DATA-INFO-Creating training data.
+2017-02-25 12:55:14,471-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:55:14,472-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:55:14,473-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:55:14,473-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:55:14,474-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:55:14,498-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:55:14,499-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:55:14,499-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:55:14,500-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:55:14,501-DATA-INFO-Found 0 unique words.
+2017-02-25 12:55:14,501-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 12:55:14,502-DATA-INFO-Creating training data.
+2017-02-25 12:58:17,172-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:58:17,172-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:58:17,173-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:58:17,174-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:58:17,174-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:58:17,199-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:58:17,200-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:58:17,200-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:58:17,201-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:58:17,202-DATA-INFO-Found 0 unique words.
+2017-02-25 12:58:17,202-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 12:58:17,203-DATA-INFO-Creating training data.
+2017-02-25 12:58:25,691-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:58:25,691-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:58:25,692-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:58:25,693-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:58:25,693-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:58:25,717-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:58:25,717-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:58:25,718-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:58:25,719-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:58:25,719-DATA-INFO-Found 0 unique words.
+2017-02-25 12:58:25,720-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 12:58:25,720-DATA-INFO-Creating training data.
+2017-02-25 12:59:52,050-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 12:59:52,050-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 12:59:52,052-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:59:52,052-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 12:59:52,053-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 12:59:52,078-DATA-INFO-48 sentences found in dataset.
+2017-02-25 12:59:52,078-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 12:59:52,079-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 12:59:52,079-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 12:59:52,080-DATA-INFO-Found 0 unique words.
+2017-02-25 12:59:52,081-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 12:59:52,081-DATA-INFO-Creating training data.
+2017-02-25 13:00:55,237-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:00:55,237-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:00:55,238-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 13:00:55,239-DATA-INFO-break
+2017-02-25 13:00:55,239-DATA-INFO-Out of loop in reader
+2017-02-25 13:00:55,240-DATA-INFO-Gone over 0 examples, saved 1 of them
+2017-02-25 13:00:55,241-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 13:00:55,266-DATA-INFO-48 sentences found in dataset.
+2017-02-25 13:00:55,267-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 13:00:55,267-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 13:00:55,267-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 13:00:55,268-DATA-INFO-Found 0 unique words.
+2017-02-25 13:00:55,268-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 13:00:55,269-DATA-INFO-Creating training data.
+2017-02-25 13:02:02,356-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:02:02,356-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:06:54,161-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:06:54,161-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:08:20,429-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:08:20,429-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:09:42,713-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:09:42,713-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:09:48,412-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:09:48,412-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:10:01,006-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:10:01,007-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:10:08,650-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:10:08,650-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:10:16,944-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:10:16,944-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:10:32,415-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:10:32,415-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:48:38,398-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:48:38,398-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:48:39,168-DATA-INFO-Out of loop in reader
+2017-02-25 13:48:39,168-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 13:48:39,168-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 13:49:03,256-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 13:49:03,257-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 13:49:03,257-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 13:49:03,257-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 13:49:03,257-DATA-INFO-Found 0 unique words.
+2017-02-25 13:49:03,258-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 13:49:03,258-DATA-INFO-Creating training data.
+2017-02-25 13:51:18,285-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 13:51:18,285-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 13:51:18,865-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 13:51:18,865-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 13:51:42,910-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 13:51:42,911-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 13:51:42,911-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 13:51:42,911-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f91321bebf8>
+2017-02-25 13:51:42,911-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 13:51:42,911-DATA-INFO-Found 0 unique words.
+2017-02-25 13:51:42,912-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 13:51:42,912-DATA-INFO-Creating training data.
+2017-02-25 14:15:04,890-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:15:04,890-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:15:05,470-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:15:05,470-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:15:29,462-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:15:29,463-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:15:29,463-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f0c45c0ebf8>
+2017-02-25 14:15:29,463-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:15:29,463-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f0c45c0ebf8>
+2017-02-25 14:15:29,463-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:15:29,463-DATA-INFO-Found 0 unique words.
+2017-02-25 14:15:29,464-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:15:29,464-DATA-INFO-Creating training data.
+2017-02-25 14:18:38,223-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:18:38,224-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:18:38,812-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:18:38,812-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:19:02,726-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:19:02,726-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:19:02,726-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:19:02,726-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7fcc35859bf8>
+2017-02-25 14:19:02,726-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:19:02,727-DATA-INFO-Found 0 unique words.
+2017-02-25 14:19:02,727-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:19:02,727-DATA-INFO-Creating training data.
+2017-02-25 14:20:17,531-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:20:17,531-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:20:18,110-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:20:18,111-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:20:42,364-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:20:42,365-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:20:42,365-DATA-INFO-0 sentences found in dataset.
+2017-02-25 14:20:42,365-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:20:42,366-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f8d5c907bf8>
+2017-02-25 14:20:42,366-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:20:42,366-DATA-INFO-Found 0 unique words.
+2017-02-25 14:20:42,367-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:20:42,367-DATA-INFO-Creating training data.
+2017-02-25 14:22:37,569-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:22:37,569-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:22:38,149-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:22:38,149-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:23:02,250-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:23:02,250-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:23:02,251-DATA-INFO-0 sentences found in dataset.
+2017-02-25 14:23:02,251-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:23:02,251-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f01155e6bf8>
+2017-02-25 14:23:02,251-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:23:02,251-DATA-INFO-Found 0 unique words.
+2017-02-25 14:23:02,251-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:23:02,251-DATA-INFO-Creating training data.
+2017-02-25 14:24:11,422-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:24:11,422-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:24:11,999-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:24:12,000-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:24:35,904-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:24:35,905-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:25:41,302-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:25:41,302-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:25:41,880-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:25:41,880-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:26:06,151-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:26:06,152-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:26:06,152-DATA-INFO-0 sentences found in dataset.
+2017-02-25 14:26:06,152-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:26:06,152-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7fb9aaaebbf8>
+2017-02-25 14:26:06,152-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:26:06,153-DATA-INFO-Found 0 unique words.
+2017-02-25 14:26:06,153-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:26:06,153-DATA-INFO-Creating training data.
+2017-02-25 14:26:50,896-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:26:50,896-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:26:51,476-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:26:51,476-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:27:15,745-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:27:15,746-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:27:15,985-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:27:15,985-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:28:50,789-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f76b449bbf8>
+2017-02-25 14:28:50,789-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:28:52,077-DATA-INFO-Found 104154 unique words.
+2017-02-25 14:28:52,123-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:28:53,000-DATA-INFO-Creating training data.
+2017-02-25 14:29:53,893-DATA-INFO-Set up logging for data formatting session.
+2017-02-25 14:29:53,893-DATA-INFO-Reading the csv data file at: raw_data/stories.csv
+2017-02-25 14:29:54,477-DATA-INFO-Gone over 10069 examples, saved 10069 of them
+2017-02-25 14:29:54,477-DATA-INFO-Breaking comments down into sentences.
+2017-02-25 14:30:18,675-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:30:18,676-DATA-INFO-Adding sentence start and end tokens to sentences.
+2017-02-25 14:30:18,973-DATA-INFO-461275 sentences found in dataset.
+2017-02-25 14:30:18,973-DATA-INFO-Tokenizing words in sentences.
+2017-02-25 14:31:54,481-DATA-INFO-<generator object tokenize_sentences.<locals>.<genexpr> at 0x7f6bb807ebf8>
+2017-02-25 14:31:54,481-DATA-INFO-Obtaining word frequency disribution.
+2017-02-25 14:31:55,796-DATA-INFO-Found 104154 unique words.
+2017-02-25 14:31:55,886-DATA-INFO-Replace all words not in vocabulary with unkown token.
+2017-02-25 14:31:56,738-DATA-INFO-Creating training data.
