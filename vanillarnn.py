@@ -376,8 +376,9 @@ class VanillaRNN(object):
 
             # Adjust learning rate if loss increases
             if (len(losses) > 1 and losses[-1][1] > losses[-2][1]):
-                learning_rate = learning_rate * 0.5
-                self.log.info("Setting learning rate to %f" % learning_rate)
+                if learning_rate > 0.0001:
+                    learning_rate = learning_rate * 0.5
+                    self.log.info("Setting learning rate to %f" % learning_rate)
 
 
             # End training if incurred a loss of 0
