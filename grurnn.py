@@ -341,7 +341,7 @@ class GruRNN(object):
     # End of calculate_loss()
 
     def train_rnn(self, learning_rate=0.005, epochs=1, patience=10000,
-                  path=None, max=None, testing=False, anneal=True):
+                  path=None, max=None, testing=False, anneal=0.000001):
         """
         Trains the RNN using stochastic gradient descent. Saves model
         parameters after every epoch.
@@ -365,7 +365,15 @@ class GruRNN(object):
 
         :type max: int
         :param max: the maximum number of examples it from the training set
-                    used in the training
+                    used in the training.
+
+        :type testing: bool
+        :param testing: if this is set to true, the models will not be saved
+                        off.
+
+        :type anneal: float
+        :param anneal: the minimum value to which the learning rate can be
+                       annealed.
         """
         if self.x_train is None or self.y_train is None:
             self.log.info("Need to load data before training the rnn")
@@ -431,9 +439,10 @@ class GruRNN(object):
             # End of loss evaluation
 
             # Adjust learning rate if loss increases
-            if (anneal and len(losses) > 1 and losses[-1][1] > losses[-2][1]):
-                learning_rate = learning_rate * 0.5
-                self.log.info("Setting learning rate to %f" % learning_rate)
+            if (len(losses) > 1 and losses[-1][1] > losses[-2][1]):
+                if learning_rate > anneal:
+                    learning_rate = learning_rate * 0.5
+                    self.log.info("Setting learning rate to %f" % learning_rate)
 
             # End training if incurred a loss of 0
             if losses[-1][1] == 0:
@@ -539,8 +548,8 @@ if __name__ == "__main__":
                            help="The learning rate to be used in training.")
     arg_parse.add_argument("-o", "--model", default=None,
                            help="Previously trained model to load on init.")
-    arg_parse.add_argument("-a", "--anneal", action="store_false",
-                           help="Set this option to not anneal learning rate.")
+    arg_parse.add_argument("-a", "--anneal", type=float, default=0.00001,
+                           help="Sets the minimum possible learning rate.")
     args = arg_parse.parse_args()
 
     argsdir = args.dir + "/" + time.strftime("%d%m%y%H") + "/";

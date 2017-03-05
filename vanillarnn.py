@@ -327,7 +327,7 @@ class VanillaRNN(object):
         :param max: the maximum number of examples it from the training set
                     used in the training
         """
-        if self.x_train == None or self.y_train == None:
+        if self.x_train is None or self.y_train is None:
             self.log.info("Need to load data before training the rnn")
 
             return
@@ -343,7 +343,7 @@ class VanillaRNN(object):
 
             # Train separately for each training example (no need for
             # minibatches)
-            if max == None:
+            if max is None:
                 for example in range(len(self.y_train)):
                     self.sgd_step(self.x_train[example], self.y_train[example],
                                   learning_rate)
@@ -363,7 +363,7 @@ class VanillaRNN(object):
             # Evaluate loss after every epoch
             self.log.info("Evaluating loss: epoch %d" % epoch)
 
-            if max == None:
+            if max is None:
                 loss = self.calculate_loss(self.x_train, self.y_train)
             else:
                 loss = self.calculate_loss(self.x_train[:max],
