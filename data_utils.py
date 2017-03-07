@@ -24,6 +24,7 @@ try:
     import _pickle as cPickle
 except Exception:
     import cPickle
+import re #regex library for re.split()
 import os
 import io
 import numpy as np
@@ -43,6 +44,7 @@ log = None # Logging
 timestr = time.strftime("%d%m%y%H") # For when current time is needed
 comments = [] # Holds the comments
 sentences = [] # Holds the sentences from the comments
+paragraphs = [] # Holds the paragraphs from the comments
 vocab_size = 0 # Number of words RNN wil remember
 # Special tokens
 unknown = "UNKNOWN_TOKEN"
@@ -146,7 +148,7 @@ def read_csv(path=None, max=None):
                  (num_seen, num_saved))
 # End of read_csv()
 
-def tokenize_sentences(num_sentences=None):
+def tokenize_sentences(num_examples=None):
     """
     Uses the nltk library to break comments down into sentences, and then
     tokenizes the words in the sentences. Also appends the sentence start and
@@ -164,9 +166,9 @@ def tokenize_sentences(num_sentences=None):
     sentences = list(sentences)
     log.info("%d sentences found in dataset." % len(sentences))
 
-    if (not num_sentences is None) and num_sentences < len(sentences):
-        log.info("Reducing number of sentences to %d" % num_sentences)
-        sentences = sentences[:num_sentences]
+    if (not num_examples is None) and num_examples < len(sentences):
+        log.info("Reducing number of sentences to %d" % num_examples)
+        sentences = sentences[:num_examples]
 
     log.info("Adding sentence start and end tokens to sentences.")
     sentences = ["%s %s %s" % (sentence_start, sentence, sentence_end)
@@ -215,6 +217,76 @@ def create_sentence_dataset(vocab_size=8000):
     y_train = np.asarray([[word_to_index[word] for word in sentence[1:]]
                          for sentence in sentences])
 # End of create_dataset()
+
+def tokenize_paragraphs(num_examples=None):
+    """
+    Uses the nltk library to break comments down into paragraphs, and then
+    tokenizes the words in the sentences. Also appends the paragraph start and
+    end tokens to each paragraph.
+    """
+    global paragraphs
+    global comments
+    global paragraph_start
+    global paragraph_end
+    global log
+
+    log.info("Breaking comments down into paragraphs.")
+    for comment in comments:
+        paragraphs.extend(re.split('\n+', comment.lower()))
+    log.info("%d comments were broken down into %d paragraphs." %
+             (len(comments), len(paragraphs)))
+
+    if (not num_paragraphs is None) and num_paragraphs < len(paragraphs):
+        log.info("Reducing number of paragraphs to %d" % num_paragraphs)
+        paragraphs = paragraphs[:num_paragraphs]
+
+    log.info("Adding sentence start and end tokens to paragraphs.")
+    paragraphs = ["%s %s %s" % (paragraph_start, paragraph, paragraph_end)
+                 for paragraph in paragraphs]
+
+    log.info("Tokenizing words in paragraphs.")
+    paragraphs = [nltk.word_tokenize(paragraph) for paragraph in paragraphs]
+    paragraphs = list(paragraphs)
+# End of tokenize_paragraphs()
+
+def create_paragraph_dataset(vocab_size=8000):
+    """
+    Creates a dataset using the tokenized paragraphs.
+
+    :type vocab_size: int
+    :param vocab_size: the size of the vocabulary for this dataset. Defaults to
+                       8000
+    """
+    global log
+    global vocabulary
+    global paragraphs
+    global index_to_word
+    global word_to_index
+    global unknown
+    global x_train
+    global y_train
+
+    log.info("Obtaining word frequency disribution.")
+    word_freq = nltk.FreqDist(itertools.chain(*paragraphs))
+    log.info("Found %d unique words." % len(word_freq.items()))
+
+    vocabulary = word_freq.most_common(vocab_size - 1)
+    index_to_word = [word[0] for word in vocabulary]
+    index_to_word.append(unknown)
+    word_to_index = dict((word, index)
+                        for index, word in enumerate(index_to_word))
+
+    log.info("Replace all words not in vocabulary with unkown token.")
+    for index, paragraph in enumerate(paragraphs):
+        paragraphs[index] = [word if word in word_to_index
+                            else unknown for word in paragra`ph]
+
+    log.info("Creating training data.")
+    x_train = np.asarray([[word_to_index[word] for word in paragraph[:-1]]
+                         for paragraph in paragraphs])
+    y_train = np.asarray([[word_to_index[word] for word in paragraph[1:]]
+                         for paragraph in paragraphs])
+# End of create_paragraph_dataset()
 
 def save_dataset(path=None, filename=None):
     """
@@ -283,7 +355,7 @@ def parse_arguments():
                            help="The size of the dataset vocabulary.")
     arg_parse.add_argument("-c", "--num_comments", type=int,
                            help="The number of comments to be read.")
-    arg_parse.add_argument("-n", "--num_sentences", type=int,
+    arg_parse.add_argument("-n", "--num_examples", type=int,
                            help="The number of sentence examples to be saved.")
     arg_parse.add_argument("-s", "--source_path",
                            help="The source path to the data.")
@@ -300,6 +372,10 @@ def parse_arguments():
                            help="The name of the logger to be used.")
     arg_parse.add_argument("-e", "--test", action="store_true",
                            help="Specify if this is just a test run.")
+    arg_parse.add_argument("-m", "--mode", default='sentences',
+                           choices=['sentences', 'paragraphs', 'stories'],
+                           help="Selects what constitutes an example in the "
+                                "dataset.")
     return arg_parse.parse_args()
 # End of parse_arguments()
 
@@ -308,8 +384,14 @@ if __name__ == "__main__":
     set_up_logging(args.log_name, args.log_dir)
     if args.source_type == "csv":
         read_csv(args.source_path, args.num_comments)
-    tokenize_sentences(args.num_sentences)
-    create_sentence_dataset(args.vocab_size)
+    if args.mode == "sentences":
+        tokenize_sentences(args.num_examples)
+        create_sentence_dataset(args.vocab_size)
+    if args.mode == "paragraphs":
+        tokenize_paragraphs(args.num_examples)
+        create_paragraph_dataset(args.vocab_size)
+    if args.mode == "stories":
+        # TO-DO
     save_dataset(args.dest_path, args.dest_name)
     if args.test:
         load_dataset(args.dest_path + "/" + args.dest_name)
