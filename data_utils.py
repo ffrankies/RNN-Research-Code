@@ -45,6 +45,7 @@ timestr = time.strftime("%d%m%y%H") # For when current time is needed
 comments = [] # Holds the comments
 sentences = [] # Holds the sentences from the comments
 paragraphs = [] # Holds the paragraphs from the comments
+stories = [] # Holds the stories
 vocab_size = 0 # Number of words RNN wil remember
 # Special tokens
 unknown = "UNKNOWN_TOKEN"
@@ -240,7 +241,7 @@ def tokenize_paragraphs(num_examples=None):
         log.info("Reducing number of paragraphs to %d" % num_examples)
         paragraphs = paragraphs[:num_examples]
 
-    log.info("Adding sentence start and end tokens to paragraphs.")
+    log.info("Adding paragraph start and end tokens to paragraphs.")
     paragraphs = ["%s %s %s" % (paragraph_start, paragraph, paragraph_end)
                  for paragraph in paragraphs]
 
@@ -287,6 +288,74 @@ def create_paragraph_dataset(vocab_size=8000):
     y_train = np.asarray([[word_to_index[word] for word in paragraph[1:]]
                          for paragraph in paragraphs])
 # End of create_paragraph_dataset()
+
+def tokenize_stories(num_examples=None):
+    """
+    Uses the nltk library to word tokenize entire comments, assuming that
+    each comment is its own story. Also appends the story start and end tokens
+    to each story.
+    """
+    global stories
+    global comments
+    global story_start
+    global story_end
+    global log
+
+    log.info("Retrieving stories from data.")
+    stories = [comment.lower() for comment in comments]
+    log.info("Found %d stories in the dataset." % len(stories))
+
+    if (not num_examples is None) and num_examples < len(stories):
+        log.info("Reducing number of stories to %d" % num_examples)
+        stories = stories[:num_examples]
+
+    log.info("Adding story start and end tokens to stories.")
+    stories = ["%s %s %s" % (story_start, story, story_end)
+                 for story in stories]
+
+    log.info("Tokenizing words in stories.")
+    stories = [nltk.word_tokenize(story) for story in stories]
+    stories = list(stories)
+# End of tokenize_stories()
+
+def create_story_dataset(vocab_size=8000):
+    """
+    Creates a dataset using the tokenized stories.
+
+    :type vocab_size: int
+    :param vocab_size: the size of the vocabulary for this dataset. Defaults to
+                       8000
+    """
+    global log
+    global vocabulary
+    global stories
+    global index_to_word
+    global word_to_index
+    global unknown
+    global x_train
+    global y_train
+
+    log.info("Obtaining word frequency disribution.")
+    word_freq = nltk.FreqDist(itertools.chain(*stories))
+    log.info("Found %d unique words." % len(word_freq.items()))
+
+    vocabulary = word_freq.most_common(vocab_size - 1)
+    index_to_word = [word[0] for word in vocabulary]
+    index_to_word.append(unknown)
+    word_to_index = dict((word, index)
+                        for index, word in enumerate(index_to_word))
+
+    log.info("Replace all words not in vocabulary with unkown token.")
+    for index, story in enumerate(stories):
+        stories[index] = [word if word in word_to_index
+                            else unknown for word in story]
+
+    log.info("Creating training data.")
+    x_train = np.asarray([[word_to_index[word] for word in story[:-1]]
+                         for story in stories])
+    y_train = np.asarray([[word_to_index[word] for word in story[1:]]
+                         for story in stories])
+# End of create_story_dataset()
 
 def save_dataset(path=None, filename=None):
     """
@@ -391,8 +460,8 @@ if __name__ == "__main__":
         tokenize_paragraphs(args.num_examples)
         create_paragraph_dataset(args.vocab_size)
     if args.mode == "stories":
-        # TO-DO
-        print("stories")
+        tokenize_stories(args.num_examples)
+        create_story_dataset(args.vocab_size)
     save_dataset(args.dest_path, args.dest_name)
     if args.test:
         load_dataset(args.dest_path + "/" + args.dest_name)
