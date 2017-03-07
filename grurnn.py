@@ -149,29 +149,7 @@ class GruRNN(object):
             self.word_to_index = {}
             self.index_to_word = []
         else:
-            self.log.info("Loading model parameters from saved model...")
-
-
-            with open(model, "rb") as modelFile:
-                params = cPickle.load(modelFile)
-
-                self.vocabulary_size = params[0]
-                self.hidden_size = params[1]
-                self.bptt_truncate = params[2]
-
-                self.weights_ih = params[3]
-                self.weights_hh = params[4]
-                self.weights_ho = params[5]
-
-                self.vocabulary = params[6]
-                if not self.vocabulary[-1] == self.unknown_token:
-                    self.log.info("Appending unknown token")
-                    self.vocabulary[-1] = self.unknown_token
-                self.index_to_word = params[7]
-                self.word_to_index = params[8]
-
-                self.bias = params[9]
-                self.out_bias = params[10]
+            self.load_parameters(model)
         # End of if statement
 
         # Symbolic representation of one input sentence
@@ -340,6 +318,93 @@ class GruRNN(object):
         self.y_train = y_train
     # End of calculate_loss()
 
+    def load_parameters(self, model=None):
+        """
+        Loads the network parameters from a previously pickled file using the
+        cPickle library.
+
+        :type path: string
+        :param path: the path to the pickled file containing the network
+                     parameters.
+        """
+        self.log.info("Loading model parameters from saved model...")
+
+        if model is None or model == "":
+            self.log.error("No model provided.")
+            sys.exit(1)
+
+        with open(model, "rb") as modelFile:
+            params = cPickle.load(modelFile)
+
+            self.vocabulary_size = params[0]
+            self.hidden_size = params[1]
+            self.bptt_truncate = params[2]
+
+            weights_ih = params[3]
+            weights_hh = params[4]
+            weights_ho = params[5]
+
+            self.vocabulary = params[6]
+            if not self.vocabulary[-1] == self.unknown_token:
+                self.log.info("Appending unknown token")
+                self.vocabulary[-1] = self.unknown_token
+            self.index_to_word = params[7]
+            self.word_to_index = params[8]
+
+            bias = params[9]
+            out_bias = params[10]
+
+            self.weights_ih = theano.shared(
+                name='weights_ih',
+                value=weights_ih.astype(theano.config.floatX))
+
+            self.weights_hh = theano.shared(
+                name='weights_hh',
+                value=weights_hh.astype(theano.config.floatX))
+
+            self.weights_ho = theano.shared(
+                name='weights_ho',
+                value=weights_ho.astype(theano.config.floatX))
+
+            self.bias = theano.shared(
+                name='bias',
+                value=bias.astype(theano.config.floatX))
+
+            self.out_bias = theano.shared(
+                name='out_bias',
+                value=out_bias.astype(theano.config.floatX))
+    # End of load_parameters()
+
+    def save_parameters(self, path=None):
+        """
+        Saves the network parameters using the cPickle library.
+
+        :type path: string
+        :param path: the path to which the parameters will be saved.
+        """
+        params = (
+            self.vocabulary_size,
+            self.hidden_size,
+            self.bptt_truncate,
+            self.weights_ih.get_value(),
+            self.weights_hh.get_value(),
+            self.weights_ho.get_value(),
+            self.vocabulary,
+            self.index_to_word,
+            self.word_to_index,
+            self.bias.get_value(),
+            self.out_bias.get_value()
+        )
+
+        if path is None:
+            modelPath = "models/reladred" + str(epoch) + ".pkl"
+            with open(modelPath, "wb") as file:
+                cPickle.dump(params, file, protocol=2)
+        else:
+            with open(path + str(epoch) + ".pkl", "wb") as file:
+                cPickle.dump(params, file, protocol=2)
+    # End of save_parameters()
+
     def train_rnn(self, learning_rate=0.005, epochs=1, patience=10000,
                   path=None, max=None, testing=False, anneal=0.000001):
         """
@@ -457,20 +522,7 @@ class GruRNN(object):
 
             # Saving model parameters
             if testing == False:
-                params = (
-                    self.vocabulary_size, self.hidden_size, self.bptt_truncate,
-                    self.weights_ih, self.weights_hh, self.weights_ho,
-                    self.vocabulary, self.index_to_word, self.word_to_index,
-                    self.bias, self.out_bias
-                )
-
-                if path is None:
-                    modelPath = "models/reladred" + str(epoch) + ".pkl"
-                    with open(modelPath, "wb") as file:
-                        cPickle.dump(params, file, protocol=2)
-                else:
-                    with open(path + str(epoch) + ".pkl", "wb") as file:
-                        cPickle.dump(params, file, protocol=2)
+                self.save_parameters(path)
         # End of training
 
         end_time = timeit.default_timer()
