@@ -32,6 +32,9 @@ import timeit
 import logging
 import logging.handlers
 import argparse
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt # For plotting
 
 class GruRNN(object):
     """
@@ -92,6 +95,10 @@ class GruRNN(object):
         self.unknown_token = "UNKNOWN_TOKEN"
         self.sentence_start_token = "SENTENCE_START"
         self.sentence_end_token = "SENTENCE_END"
+        self.paragraph_start = "PARAGRAPH_START"
+        self.paragraph_end = "PARAGRAPH_END"
+        self.story_start = "STORY_START"
+        self.story_end = "STORY_END"
 
         if model is None:
             self.log.info("Initializing RNN parameters and functions...")
@@ -375,7 +382,7 @@ class GruRNN(object):
                 value=out_bias.astype(theano.config.floatX))
     # End of load_parameters()
 
-    def save_parameters(self, path=None):
+    def save_parameters(self, path=None, epoch=0):
         """
         Saves the network parameters using the cPickle library.
 
@@ -522,7 +529,7 @@ class GruRNN(object):
 
             # Saving model parameters
             if testing == False:
-                self.save_parameters(path)
+                self.save_parameters(path, epoch)
         # End of training
 
         end_time = timeit.default_timer()
@@ -533,6 +540,21 @@ class GruRNN(object):
             (epochs, losses[-1][1], (end_time - start_time) / 60)
         )
         return (losses[-1][1], (end_time - start_time) / 60)
+
+        # Plot a graph of loss against epochs, save graph
+        self.log.info("Plotting a graph of loss vs iteration")
+        plot_iterations = []
+        plot_losses = []
+        for i in range(len(losses)):
+            plot_iterations.append(i)
+            plot_losses.append(losses[i][1])
+        plt.plot(plot_iterations, plot_losses)
+        if path is None:
+            modelPath = "models/loss_plot.png"
+            plt.savefig(modelPath)
+        else:
+            modelPath = path + "/loss_plot.png"
+            plt.savefig(modelPath)
     # End of train_rnn()
 
     def generate_sentence(self):
@@ -563,6 +585,64 @@ class GruRNN(object):
         sentence_str = [self.index_to_word[word] for word in sentence[1:-1]]
         return sentence_str
     # End of generate_sentence()
+
+    def generate_paragraph(self):
+        """
+        Generates one paragraph based on current model parameters. Model needs
+        to be loaded or trained before this step in order to produce any
+        results.
+
+        :return type: list of strings
+        :return param: a generated paragraph, with each word being an item in
+                       the array.
+        """
+        if self.word_to_index is None:
+            self.log.info("Need to load a model or data before this step.")
+            return []
+
+        # Start paragraph with the start token
+        paragraph = [self.word_to_index[self.paragraph_start]]
+        # Predict next word until end token is received
+        while not paragraph[-1] == self.word_to_index[self.paragraph_end]:
+            next_word_probs = self.forward_propagate(paragraph)
+            sampled_word = self.word_to_index[self.unknown_token]
+            # We don't want the unknown token to appear in the paragraph
+            while sampled_word == self.word_to_index[self.unknown_token]:
+                samples = np.random.multinomial(1, next_word_probs[-1])
+                sampled_word = np.argmax(samples)
+            paragraph.append(sampled_word)
+        paragraph_str = [self.index_to_word[word] for word in paragraph[1:-1]]
+        return paragraph_str
+    # End of generate_paragraph()
+
+    def generate_story(self):
+        """
+        Generates one story based on current model parameters. Model needs
+        to be loaded or trained before this step in order to produce any
+        results.
+
+        :return type: list of strings
+        :return param: a generated story, with each word being an item in
+                       the array.
+        """
+        if self.word_to_index is None:
+            self.log.info("Need to load a model or data before this step.")
+            return []
+
+        # Start story with the start token
+        story = [self.word_to_index[self.story_start]]
+        # Predict next word until end token is received
+        while not story[-1] == self.word_to_index[self.story_end]:
+            next_word_probs = self.forward_propagate(story)
+            sampled_word = self.word_to_index[self.unknown_token]
+            # We don't want the unknown token to appear in the story
+            while sampled_word == self.word_to_index[self.unknown_token]:
+                samples = np.random.multinomial(1, next_word_probs[-1])
+                sampled_word = np.argmax(samples)
+            story.append(sampled_word)
+        story_str = [self.index_to_word[word] for word in story[1:-1]]
+        return story_str
+    # End of generate_story()
 
 def createDir(dirPath):
     """
@@ -602,6 +682,9 @@ if __name__ == "__main__":
                            help="Previously trained model to load on init.")
     arg_parse.add_argument("-a", "--anneal", type=float, default=0.00001,
                            help="Sets the minimum possible learning rate.")
+    arg_parse.add_argument("-s", "--dataset", default="./datasets/stories.pkl",
+                           help="The path to the dataset to be used in "
+                                " training.")
     args = arg_parse.parse_args()
 
     argsdir = args.dir + "/" + time.strftime("%d%m%y%H") + "/";
@@ -633,7 +716,7 @@ if __name__ == "__main__":
     testlog.info("Running a new GRU-RNN with logging")
 
     RNN = GruRNN(model=args.model)
-    RNN.load_data()
+    RNN.load_data(args.dataset)
     #loss = RNN.calculate_loss(RNN.x_train, RNN.y_train)
     #self.log.info(loss)
     RNN.train_rnn(
@@ -650,21 +733,21 @@ if __name__ == "__main__":
         testlog.info("Finished running test.")
         sys.exit(0)
 
-    testlog.info("Generating sentences")
+    testlog.info("Generating stories")
 
-    file = open(sentenceDir+"sentences.txt", "w")
+    file = open(storyDir+"stories.txt", "w")
 
     attempts = 0
-    sents = 0
+    successes = 0
 
-    while sents < 100:
-        sentence = RNN.generate_sentence()
-        if len(sentence) >= 5:
-            file.write(" ".join(sentence) + "\n")
-            sents += 1
+    while successes < 25:
+        story = RNN.generate_story()
+        if len(story) >= 50:
+            file.write(" ".join(story) + "\n")
+            successes += 1
         attempts += 1
 
     file.close()
 
-    testlog.info("Generated %d sentences after %d attempts." %
-                 (sents, attempts))
+    testlog.info("Generated %d stories after %d attempts." %
+                 (successes, attempts))

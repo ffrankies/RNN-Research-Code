@@ -83,7 +83,7 @@ model.train_rnn(
     patience=20 if args.max == None else args.max,
     path=modelDir+"/reladred",
     max=args.max,
-    testing=True,
+    testing=False,
     learning_rate=args.learning_rate
 )
 
@@ -94,11 +94,10 @@ file = open(sentenceDir+"/sentences.txt", "w")
 attempts = 0
 sents = 0
 
-while sents < 100:
+while sents < 10:
     sentence = model.generate_sentence()
-    if len(sentence) >= 5:
-        file.write(" ".join(sentence) + "\n")
-        sents += 1
+    file.write(" ".join(sentence) + "\n")
+    sents += 1
     attempts += 1
 
 file.close()
