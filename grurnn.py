@@ -103,7 +103,6 @@ class GruRNN(object):
         if model is None:
             self.log.info("Initializing RNN parameters and functions...")
 
-
             self.vocabulary_size = voc_size
             self.hidden_size = hid_size
             self.bptt_truncate = trunc
@@ -685,6 +684,8 @@ if __name__ == "__main__":
     arg_parse.add_argument("-s", "--dataset", default="./datasets/stories.pkl",
                            help="The path to the dataset to be used in "
                                 " training.")
+    arg_parse.add_argument("-r", "--truncate", type=int, default=1000,
+                           help="The backpropagate truncate value.")
     args = arg_parse.parse_args()
 
     argsdir = args.dir + "/" + time.strftime("%d%m%y%H") + "/";
@@ -715,7 +716,7 @@ if __name__ == "__main__":
     testlog.addHandler(handler)
     testlog.info("Running a new GRU-RNN with logging")
 
-    RNN = GruRNN(model=args.model)
+    RNN = GruRNN(model=args.model, trunc=args.truncate)
     RNN.load_data(args.dataset)
     #loss = RNN.calculate_loss(RNN.x_train, RNN.y_train)
     #self.log.info(loss)
