@@ -198,7 +198,7 @@ class GruRNN(object):
             current_state = temp * hypothesis + update_gate * previous_state
 
             current_output = T.nnet.softmax(
-                self.weights_ho.dot(current_state) + self.out_bias
+                self.weights_ho.dot(current_state) # + self.out_bias
             )[0]
 
             # Not sure why current_output[0] and not just current_output...
@@ -225,35 +225,51 @@ class GruRNN(object):
 
         # Calculates the output error between the predicted output and the
         # actual output
-        out_error = T.sum(T.nnet.categorical_crossentropy(out, output))
+        # Categorical crossentropy formula according to deeplearning.net:
+        # -Sum(p(x)log(q(x))), where p(x) is the true distribution and q(x) is
+        # the calculated distribution
+        o_e = T.sum(T.nnet.categorical_crossentropy(out, output))
+        out_error = T.sum(
+            -T.sum(
+                T.extra_ops.to_one_hot(output, self.vocabulary_size)*T.log(out + 1e-6)
+            )
+        )
 
         # Symbolically represents gradient calculations for gradient descent
         d_weights_ih = T.grad(out_error, self.weights_ih)
         d_weights_hh = T.grad(out_error, self.weights_hh)
         d_weights_ho = T.grad(out_error, self.weights_ho)
         d_bias = T.grad(out_error, self.bias)
-        d_out_bias = T.grad(out_error, self.out_bias)
+        #d_out_bias = T.grad(out_error, self.out_bias)
+
+        cd_weights_ih = T.switch(T.eq(d_weights_ih, T.zeros_like(d_weights_ih)), 1e-4, d_weights_ih)
+        cd_weights_hh = T.switch(T.eq(d_weights_hh, T.zeros_like(d_weights_hh)), 1e-4, d_weights_hh)
+        cd_weights_ho = T.switch(T.eq(d_weights_ho, T.zeros_like(d_weights_ho)), 1e-4, d_weights_ho)
+        cd_bias = T.switch(T.eq(d_bias, T.zeros_like(d_bias)), 1e-4, d_bias)
+        #cd_out_bias = T.switch(T.eq(d_out_bias, T.zeros_like(d_out_bias)), 1e-4, d_out_bias)
 
         # Symbolic theano functions
         self.forward_propagate = theano.function([input], out)
         self.predict = theano.function([input], prediction)
         self.calculate_error = theano.function([input, output], out_error)
         self.bptt = theano.function([input, output],
-            [d_weights_ih, d_weights_hh, d_weights_ho, d_bias, d_out_bias])
+            [cd_weights_ih, cd_weights_hh, cd_weights_ho, cd_bias])
 
         # Stochastic Gradient Descent step
         learning_rate = T.scalar('learning_rate')
+
+        ih_update = self.weights_ih - learning_rate * cd_weights_ih
+        hh_update = self.weights_hh - learning_rate * cd_weights_hh
+        ho_update = self.weights_ho - learning_rate * cd_weights_ho
+        bias_update = self.bias - learning_rate * cd_bias
+        #out_bias_update = self.out_bias - learning_rate * cd_out_bias
+
         self.sgd_step = theano.function(
             [input, output, learning_rate], [],
-            updates=[(self.weights_ih, self.weights_ih - learning_rate *
-                      d_weights_ih),
-                     (self.weights_hh, self.weights_hh - learning_rate *
-                      d_weights_hh),
-                     (self.weights_ho, self.weights_ho - learning_rate *
-                      d_weights_ho),
-                     (self.bias, self.bias - learning_rate * d_bias),
-                     (self.out_bias, self.out_bias - learning_rate *
-                      d_out_bias)]
+            updates=[(self.weights_ih, T.clip(ih_update, -100, 100)),
+                     (self.weights_hh, T.clip(hh_update, -100, 100)),
+                     (self.weights_ho, T.clip(ho_update, -100, 100)),
+                     (self.bias, T.clip(bias_update, -100, 100))]
         )
 
         self.x_train = None
@@ -403,11 +419,11 @@ class GruRNN(object):
         )
 
         if path is None:
-            modelPath = "models/reladred" + str(epoch) + ".pkl"
+            modelPath = "model.pkl"
             with open(modelPath, "wb") as file:
                 cPickle.dump(params, file, protocol=2)
         else:
-            with open(path + str(epoch) + ".pkl", "wb") as file:
+            with open(path + ".pkl", "wb") as file:
                 cPickle.dump(params, file, protocol=2)
     # End of save_parameters()
 
@@ -492,8 +508,29 @@ class GruRNN(object):
                     examples_seen += 1
                     if examples_seen % patience == 0:
                         self.log.info("Evaluated %d examples" % examples_seen)
-
             # End of training for epoch
+
+            #Preventing zeros in weights
+            #Retrieve numpy arrays of each network parameter
+            local_w_ih = self.weights_ih.get_value()
+            local_w_hh = self.weights_hh.get_value()
+            local_w_ho = self.weights_ho.get_value()
+            local_bias = self.bias.get_value()
+            local_out_bias = self.out_bias.get_value()
+
+            out = self.forward_propagate(self.x_train[3])
+            print("%f - %f, %f" % (np.max(out), np.min(out), np.sum(out)))
+
+            print("Max weight: %f, min weight: %f" % (np.max([np.max(local_w_ih), np.max(local_w_hh), np.max(local_w_ho), np.max(local_bias), np.max(local_out_bias)]), np.min([np.min(local_w_ih), np.min(local_w_hh), np.min(local_w_ho), np.min(local_bias), np.min(local_out_bias)])))
+
+            if np.isnan(local_bias).any() or np.isnan(local_out_bias).any() or np.isnan(local_w_ih).any() or np.isnan(local_w_hh).any() or np.isnan(local_w_ho).any():
+                print("Found a nan inside the weights.")
+
+            if np.isinf(local_bias).any() or np.isinf(local_out_bias).any() or np.isinf(local_w_ih).any() or np.isinf(local_w_hh).any() or np.isinf(local_w_ho).any():
+                print("Found an infinity inside the weights.")
+
+            # Alternative - use theano.tensor.clip and switch to switch zeros
+            # for small numbers, and clip numbers to a given max and min value
 
             # Evaluate loss after every epoch
             self.log.info("Evaluating loss: epoch %d" % epoch)
@@ -538,7 +575,6 @@ class GruRNN(object):
              + " Training took %.2f m") %
             (epochs, losses[-1][1], (end_time - start_time) / 60)
         )
-        return (losses[-1][1], (end_time - start_time) / 60)
 
         # Plot a graph of loss against epochs, save graph
         self.log.info("Plotting a graph of loss vs iteration")
@@ -549,11 +585,13 @@ class GruRNN(object):
             plot_losses.append(losses[i][1])
         plt.plot(plot_iterations, plot_losses)
         if path is None:
-            modelPath = "models/loss_plot.png"
+            modelPath = "loss_plot.png"
             plt.savefig(modelPath)
         else:
-            modelPath = path + "/loss_plot.png"
+            modelPath = path + "loss_plot.png"
             plt.savefig(modelPath)
+
+        return (losses[-1][1], (end_time - start_time) / 60)
     # End of train_rnn()
 
     def generate_sentence(self):
@@ -689,9 +727,9 @@ if __name__ == "__main__":
     args = arg_parse.parse_args()
 
     argsdir = args.dir + "/" + time.strftime("%d%m%y%H") + "/";
-    sentenceDir = argsdir + "sentences/"
-    modelDir = argsdir + "models/"
-    logDir = argsdir + "logs/"
+    sentenceDir = argsdir
+    modelDir = argsdir
+    logDir = argsdir
     logFile = args.filename
 
     createDir(sentenceDir)
@@ -736,7 +774,7 @@ if __name__ == "__main__":
 
     testlog.info("Generating stories")
 
-    file = open(storyDir+"stories.txt", "w")
+    file = open(sentenceDir+"stories.txt", "w")
 
     attempts = 0
     successes = 0
