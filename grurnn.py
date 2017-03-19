@@ -57,7 +57,7 @@ class GruRNN(object):
     corresponding to the index with the highest probability.
 
     :author: Frank Wanye
-    :date: 04 Feb 2017
+    :date: 19 Mar 2017
     """
 
     def __init__(self, voc_size=8000, hid_size=100, trunc=4, model=None):
@@ -158,6 +158,14 @@ class GruRNN(object):
             self.load_parameters(model)
         # End of if statement
 
+        self.log.info("Network parameters: \n"
+                      "Vocabulary size: %d\n"
+                      "Hidden layer size: %d\n"
+                      "Bptt truncate: %d\n" %
+                      (self.vocabulary_size,
+                       self.hidden_size,
+                       self.bptt_truncate))
+
         # Symbolic representation of one input sentence
         input = T.ivector('sentence')
 
@@ -198,7 +206,7 @@ class GruRNN(object):
             current_state = temp * hypothesis + update_gate * previous_state
 
             current_output = T.nnet.softmax(
-                self.weights_ho.dot(current_state) # + self.out_bias
+                self.weights_ho.dot(current_state) + self.out_bias
             )[0]
 
             # Not sure why current_output[0] and not just current_output...
@@ -228,10 +236,11 @@ class GruRNN(object):
         # Categorical crossentropy formula according to deeplearning.net:
         # -Sum(p(x)log(q(x))), where p(x) is the true distribution and q(x) is
         # the calculated distribution
-        o_e = T.sum(T.nnet.categorical_crossentropy(out, output))
-        out_error = T.sum(
+        out_error = T.sum(T.nnet.categorical_crossentropy(
+            out + T.mean(out)/1000, output))
+        o_e = T.sum(
             -T.sum(
-                T.extra_ops.to_one_hot(output, self.vocabulary_size)*T.log(out + 1e-6)
+                T.extra_ops.to_one_hot(output, self.vocabulary_size)*T.log(out + T.mean(out)/1000)
             )
         )
 
@@ -240,36 +249,31 @@ class GruRNN(object):
         d_weights_hh = T.grad(out_error, self.weights_hh)
         d_weights_ho = T.grad(out_error, self.weights_ho)
         d_bias = T.grad(out_error, self.bias)
-        #d_out_bias = T.grad(out_error, self.out_bias)
-
-        cd_weights_ih = T.switch(T.eq(d_weights_ih, T.zeros_like(d_weights_ih)), 1e-4, d_weights_ih)
-        cd_weights_hh = T.switch(T.eq(d_weights_hh, T.zeros_like(d_weights_hh)), 1e-4, d_weights_hh)
-        cd_weights_ho = T.switch(T.eq(d_weights_ho, T.zeros_like(d_weights_ho)), 1e-4, d_weights_ho)
-        cd_bias = T.switch(T.eq(d_bias, T.zeros_like(d_bias)), 1e-4, d_bias)
-        #cd_out_bias = T.switch(T.eq(d_out_bias, T.zeros_like(d_out_bias)), 1e-4, d_out_bias)
+        d_out_bias = T.grad(out_error, self.out_bias)
 
         # Symbolic theano functions
         self.forward_propagate = theano.function([input], out)
         self.predict = theano.function([input], prediction)
         self.calculate_error = theano.function([input, output], out_error)
         self.bptt = theano.function([input, output],
-            [cd_weights_ih, cd_weights_hh, cd_weights_ho, cd_bias])
+            [d_weights_ih, d_weights_hh, d_weights_ho, d_bias])
 
         # Stochastic Gradient Descent step
         learning_rate = T.scalar('learning_rate')
 
-        ih_update = self.weights_ih - learning_rate * cd_weights_ih
-        hh_update = self.weights_hh - learning_rate * cd_weights_hh
-        ho_update = self.weights_ho - learning_rate * cd_weights_ho
-        bias_update = self.bias - learning_rate * cd_bias
-        #out_bias_update = self.out_bias - learning_rate * cd_out_bias
+        ih_update = self.weights_ih - learning_rate * d_weights_ih
+        hh_update = self.weights_hh - learning_rate * d_weights_hh
+        ho_update = self.weights_ho - learning_rate * d_weights_ho
+        bias_update = self.bias - learning_rate * d_bias
+        out_bias_update = self.out_bias - learning_rate * d_out_bias
 
         self.sgd_step = theano.function(
             [input, output, learning_rate], [],
-            updates=[(self.weights_ih, T.clip(ih_update, -100, 100)),
-                     (self.weights_hh, T.clip(hh_update, -100, 100)),
-                     (self.weights_ho, T.clip(ho_update, -100, 100)),
-                     (self.bias, T.clip(bias_update, -100, 100))]
+            updates=[(self.weights_ih, ih_update),
+                     (self.weights_hh, hh_update),
+                     (self.weights_ho, ho_update),
+                     (self.bias, bias_update),
+                     (self.out_bias, out_bias_update)]
         )
 
         self.x_train = None
@@ -521,7 +525,21 @@ class GruRNN(object):
             out = self.forward_propagate(self.x_train[3])
             print("%f - %f, %f" % (np.max(out), np.min(out), np.sum(out)))
 
-            print("Max weight: %f, min weight: %f" % (np.max([np.max(local_w_ih), np.max(local_w_hh), np.max(local_w_ho), np.max(local_bias), np.max(local_out_bias)]), np.min([np.min(local_w_ih), np.min(local_w_hh), np.min(local_w_ho), np.min(local_bias), np.min(local_out_bias)])))
+            print("Max weight: %f, min weight: %f" %
+                (np.max([
+                    np.max(local_w_ih),
+                    np.max(local_w_hh),
+                    np.max(local_w_ho),
+                    np.max(local_bias),
+                    np.max(local_out_bias)]),
+                 np.min([
+                    np.min(local_w_ih),
+                    np.min(local_w_hh),
+                    np.min(local_w_ho),
+                    np.min(local_bias),
+                    np.min(local_out_bias)])))
+
+            print("Mean out: %f" % np.mean(out))
 
             if np.isnan(local_bias).any() or np.isnan(local_out_bias).any() or np.isnan(local_w_ih).any() or np.isnan(local_w_hh).any() or np.isnan(local_w_ho).any():
                 print("Found a nan inside the weights.")
@@ -666,19 +684,27 @@ class GruRNN(object):
             self.log.info("Need to load a model or data before this step.")
             return []
 
+        num_predictions = 0
+        num_unknowns = 0
+
         # Start story with the start token
         story = [self.word_to_index[self.story_start]]
         # Predict next word until end token is received
         while not story[-1] == self.word_to_index[self.story_end]:
+            num_predictions += 1
             next_word_probs = self.forward_propagate(story)
-            sampled_word = self.word_to_index[self.unknown_token]
+            samples = np.random.multinomial(1, next_word_probs[-1])
+            sampled_word = np.argmax(samples)
             # We don't want the unknown token to appear in the story
             while sampled_word == self.word_to_index[self.unknown_token]:
+                num_unknowns += 1
                 samples = np.random.multinomial(1, next_word_probs[-1])
                 sampled_word = np.argmax(samples)
+            # End of while loop
             story.append(sampled_word)
         story_str = [self.index_to_word[word] for word in story[1:-1]]
-        return story_str
+        story_str = " ".join(story_str)
+        return (story_str, (num_unknowns / num_predictions) * 100)
     # End of generate_story()
 
 def createDir(dirPath):
@@ -722,8 +748,10 @@ if __name__ == "__main__":
     arg_parse.add_argument("-s", "--dataset", default="./datasets/stories.pkl",
                            help="The path to the dataset to be used in "
                                 " training.")
-    arg_parse.add_argument("-r", "--truncate", type=int, default=1000,
+    arg_parse.add_argument("-r", "--truncate", type=int, default=100,
                            help="The backpropagate truncate value.")
+    arg_parse.add_argument("-v", "--voc_size", type=int, default=8000,
+                           help="The vocabulary size for the network.")
     args = arg_parse.parse_args()
 
     argsdir = args.dir + "/" + time.strftime("%d%m%y%H") + "/";
@@ -754,7 +782,7 @@ if __name__ == "__main__":
     testlog.addHandler(handler)
     testlog.info("Running a new GRU-RNN with logging")
 
-    RNN = GruRNN(model=args.model, trunc=args.truncate)
+    RNN = GruRNN(model=args.model, trunc=args.truncate, voc_size=args.voc_size)
     RNN.load_data(args.dataset)
     #loss = RNN.calculate_loss(RNN.x_train, RNN.y_train)
     #self.log.info(loss)
@@ -778,15 +806,22 @@ if __name__ == "__main__":
 
     attempts = 0
     successes = 0
+    percent_unknowns = 0
 
     while successes < 25:
         story = RNN.generate_story()
-        if len(story) >= 50:
-            file.write(" ".join(story) + "\n")
-            successes += 1
+        print(story[0])
+        percent_unknowns += story[1]
+        # if len(story) >= 50:
+        file.write(" ".join(story[0]) + "\n")
+        successes += 1
         attempts += 1
 
     file.close()
 
     testlog.info("Generated %d stories after %d attempts." %
                  (successes, attempts))
+
+    percent_unknowns = percent_unknowns / attempts
+    testlog.info("%f percent of the words generated were unknown tokens." %
+                 percent_unknowns)

@@ -1,0 +1,14 @@
+2017-03-07 13:51:43,174-TEST-INFO-Running a new GRU-RNN with logging
+2017-03-07 13:51:43,174-TEST.GRU-INFO-Loading model parameters from saved model...
+2017-03-07 13:51:43,308-TEST.GRU-INFO-Appending unknown token
+2017-03-07 14:37:38,873-TEST-INFO-Running a new GRU-RNN with logging
+2017-03-07 14:37:38,873-TEST.GRU-INFO-Loading model parameters from saved model...
+2017-03-07 14:37:38,977-TEST.GRU-INFO-Appending unknown token
+2017-03-07 14:38:12,104-TEST-INFO-Printing self.index_to_word
+2017-03-07 14:38:12,105-TEST-INFO-[u'SENTENCE_START', u'SENTENCE_END', u'.', u'you', u',', u'he', u'``', u"''", u'the', u'of', u'his', u'and', u'is', u'to', u'this', u'?', u"'s", u'!', u'on', u'i', u'has', u'at', u'so', u'it', u'me', u'something', u'problem', u'face', u'look', u'get', u'out', u'fucking', u'will', u'have', u'against', u'him', u"n't", u'been', u'are', u'what', u'pacing', u'never', u'want', u'be', u'able', u'back', u'say', u'tired', u'but', u'just', u'plain', u'stupid', u'know', u'an', u'undefeated', u'record', u'won', u'every', u'time', u'by', u'knockout', u'least', u'6', u'inches', u'more', u'reach', u'than', u'for', u'fuck', u'sake', u'your', u'head', u'that', u'any', u'chance', u'ca', u'take', u'fight', u'4', u'years', u'since', u'went', u'train', u'east', u'coast', u"'re", u'soft', u'there', u'no', u'real', u'fighters', u'where', u"'ve", u'begun', u'hyperventilating', u'point', u'does', u'even', u'worked', u'UNKNOWN_TOKEN']
+2017-03-08 20:55:58,652-TEST-INFO-Running a new GRU-RNN with logging
+2017-03-08 20:55:58,652-TEST.GRU-INFO-Loading model parameters from saved model...
+2017-03-08 20:55:58,655-TEST.GRU-INFO-Appending unknown token
+2017-03-08 20:56:17,916-TEST-INFO-Printing self.index_to_word
+2017-03-08 20:56:17,917-TEST-INFO-['SENTENCE_START', 'SENTENCE_END', '.', 'you', ',', 'he', '``', "''", 'the', 'of', 'his', 'and', 'is', 'to', 'this', '?', "'s", '!', 'on', 'i', 'has', 'at', 'so', 'it', 'me', 'something', 'problem', 'face', 'look', 'get', 'out', 'fucking', 'will', 'have', 'against', 'him', "n't", 'been', 'are', 'what', 'pacing', 'never', 'want', 'be', 'able', 'back', 'say', 'tired', 'but', 'just', 'plain', 'stupid', 'know', 'an', 'undefeated', 'record', 'won', 'every', 'time', 'by', 'knockout', 'least', '6', 'inches', 'more', 'reach', 'than', 'for', 'fuck', 'sake', 'your', 'head', 'that', 'any', 'chance', 'ca', 'take', 'fight', '4', 'years', 'since', 'went', 'train', 'east', 'coast', "'re", 'soft', 'there', 'no', 'real', 'fighters', 'where', "'ve", 'begun', 'hyperventilating', 'point', 'does', 'even', 'worked', 'UNKNOWN_TOKEN']
+2017-03-08 20:56:18,466-TEST-INFO-Generated 10 sentences after 0 attempts.
