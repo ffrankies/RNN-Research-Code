@@ -565,7 +565,7 @@ class GruRNN(object):
             # End of loss evaluation
 
             # Adjust learning rate if loss increases
-            if (len(losses) > 1 and losses[-1][1] > losses[-2][1]):
+            if (len(losses) > 1 and losses[-1][1] >= losses[-2][1]):
                 if learning_rate > anneal:
                     learning_rate = learning_rate * 0.5
                     self.log.info("Setting learning rate to %f" % learning_rate)

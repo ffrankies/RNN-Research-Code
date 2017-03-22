@@ -1,0 +1,242 @@
+2017-03-20 15:34:25,645-TEST-INFO-Running a new GRU-RNN with logging
+2017-03-20 15:34:25,646-TEST.GRU-INFO-Initializing RNN parameters and functions...
+2017-03-20 15:34:25,650-TEST.GRU-INFO-Network parameters: 
+Vocabulary size: 200
+Hidden layer size: 100
+Bptt truncate: 500
+
+2017-03-20 15:34:46,379-TEST.GRU-INFO-Loading the dataset from datasets/5stories.pkl
+2017-03-20 15:34:46,380-TEST.GRU-INFO-Dataset contains 199 words
+2017-03-20 15:34:46,380-TEST.GRU-INFO-Evaluating loss before training.
+2017-03-20 15:34:46,380-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:34:47,099-TEST.GRU-INFO-RNN incurred a loss of 5.296780 before training
+2017-03-20 15:34:47,100-TEST.GRU-INFO-Training the model: epoch 1
+2017-03-20 15:34:49,534-TEST.GRU-INFO-Evaluating loss: epoch 1
+2017-03-20 15:34:49,535-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:34:50,251-TEST.GRU-INFO-RNN incurred a loss of 11.559634 after 1 epochs
+2017-03-20 15:34:50,251-TEST.GRU-INFO-Setting learning rate to 0.025000
+2017-03-20 15:34:50,262-TEST.GRU-INFO-Training the model: epoch 2
+2017-03-20 15:34:52,654-TEST.GRU-INFO-Evaluating loss: epoch 2
+2017-03-20 15:34:52,655-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:34:53,367-TEST.GRU-INFO-RNN incurred a loss of 11.559634 after 2 epochs
+2017-03-20 15:34:53,368-TEST.GRU-INFO-Setting learning rate to 0.012500
+2017-03-20 15:34:53,379-TEST.GRU-INFO-Training the model: epoch 3
+2017-03-20 15:35:03,562-TEST-INFO-Running a new GRU-RNN with logging
+2017-03-20 15:35:03,562-TEST.GRU-INFO-Initializing RNN parameters and functions...
+2017-03-20 15:35:03,566-TEST.GRU-INFO-Network parameters: 
+Vocabulary size: 200
+Hidden layer size: 100
+Bptt truncate: 500
+
+2017-03-20 15:35:23,253-TEST.GRU-INFO-Loading the dataset from datasets/5stories.pkl
+2017-03-20 15:35:23,254-TEST.GRU-INFO-Dataset contains 199 words
+2017-03-20 15:35:23,254-TEST.GRU-INFO-Evaluating loss before training.
+2017-03-20 15:35:23,254-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:23,972-TEST.GRU-INFO-RNN incurred a loss of 5.297818 before training
+2017-03-20 15:35:23,972-TEST.GRU-INFO-Training the model: epoch 1
+2017-03-20 15:35:26,391-TEST.GRU-INFO-Evaluating loss: epoch 1
+2017-03-20 15:35:26,391-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:27,103-TEST.GRU-INFO-RNN incurred a loss of 4.695126 after 1 epochs
+2017-03-20 15:35:27,114-TEST.GRU-INFO-Training the model: epoch 2
+2017-03-20 15:35:29,490-TEST.GRU-INFO-Evaluating loss: epoch 2
+2017-03-20 15:35:29,491-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:30,203-TEST.GRU-INFO-RNN incurred a loss of 4.275825 after 2 epochs
+2017-03-20 15:35:30,214-TEST.GRU-INFO-Training the model: epoch 3
+2017-03-20 15:35:32,591-TEST.GRU-INFO-Evaluating loss: epoch 3
+2017-03-20 15:35:32,591-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:33,288-TEST.GRU-INFO-RNN incurred a loss of 4.542649 after 3 epochs
+2017-03-20 15:35:33,288-TEST.GRU-INFO-Setting learning rate to 0.002500
+2017-03-20 15:35:33,299-TEST.GRU-INFO-Training the model: epoch 4
+2017-03-20 15:35:35,674-TEST.GRU-INFO-Evaluating loss: epoch 4
+2017-03-20 15:35:35,674-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:36,372-TEST.GRU-INFO-RNN incurred a loss of 4.020725 after 4 epochs
+2017-03-20 15:35:36,384-TEST.GRU-INFO-Training the model: epoch 5
+2017-03-20 15:35:38,762-TEST.GRU-INFO-Evaluating loss: epoch 5
+2017-03-20 15:35:38,762-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:39,475-TEST.GRU-INFO-RNN incurred a loss of 3.865262 after 5 epochs
+2017-03-20 15:35:39,486-TEST.GRU-INFO-Training the model: epoch 6
+2017-03-20 15:35:41,859-TEST.GRU-INFO-Evaluating loss: epoch 6
+2017-03-20 15:35:41,859-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:42,560-TEST.GRU-INFO-RNN incurred a loss of 3.842165 after 6 epochs
+2017-03-20 15:35:42,571-TEST.GRU-INFO-Training the model: epoch 7
+2017-03-20 15:35:44,944-TEST.GRU-INFO-Evaluating loss: epoch 7
+2017-03-20 15:35:44,945-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:45,657-TEST.GRU-INFO-RNN incurred a loss of 3.801074 after 7 epochs
+2017-03-20 15:35:45,668-TEST.GRU-INFO-Training the model: epoch 8
+2017-03-20 15:35:48,039-TEST.GRU-INFO-Evaluating loss: epoch 8
+2017-03-20 15:35:48,040-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:48,738-TEST.GRU-INFO-RNN incurred a loss of 3.903576 after 8 epochs
+2017-03-20 15:35:48,738-TEST.GRU-INFO-Setting learning rate to 0.001250
+2017-03-20 15:35:48,749-TEST.GRU-INFO-Training the model: epoch 9
+2017-03-20 15:35:51,121-TEST.GRU-INFO-Evaluating loss: epoch 9
+2017-03-20 15:35:51,122-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:51,819-TEST.GRU-INFO-RNN incurred a loss of 3.752390 after 9 epochs
+2017-03-20 15:35:51,830-TEST.GRU-INFO-Training the model: epoch 10
+2017-03-20 15:35:54,202-TEST.GRU-INFO-Evaluating loss: epoch 10
+2017-03-20 15:35:54,202-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:54,901-TEST.GRU-INFO-RNN incurred a loss of 3.745211 after 10 epochs
+2017-03-20 15:35:54,912-TEST.GRU-INFO-Training the model: epoch 11
+2017-03-20 15:35:57,287-TEST.GRU-INFO-Evaluating loss: epoch 11
+2017-03-20 15:35:57,288-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:35:57,998-TEST.GRU-INFO-RNN incurred a loss of 3.738971 after 11 epochs
+2017-03-20 15:35:58,009-TEST.GRU-INFO-Training the model: epoch 12
+2017-03-20 15:36:00,387-TEST.GRU-INFO-Evaluating loss: epoch 12
+2017-03-20 15:36:00,387-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:01,083-TEST.GRU-INFO-RNN incurred a loss of 3.733621 after 12 epochs
+2017-03-20 15:36:01,095-TEST.GRU-INFO-Training the model: epoch 13
+2017-03-20 15:36:03,471-TEST.GRU-INFO-Evaluating loss: epoch 13
+2017-03-20 15:36:03,471-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:04,170-TEST.GRU-INFO-RNN incurred a loss of 3.729065 after 13 epochs
+2017-03-20 15:36:04,182-TEST.GRU-INFO-Training the model: epoch 14
+2017-03-20 15:36:06,552-TEST.GRU-INFO-Evaluating loss: epoch 14
+2017-03-20 15:36:06,552-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:07,251-TEST.GRU-INFO-RNN incurred a loss of 3.725192 after 14 epochs
+2017-03-20 15:36:07,262-TEST.GRU-INFO-Training the model: epoch 15
+2017-03-20 15:36:09,635-TEST.GRU-INFO-Evaluating loss: epoch 15
+2017-03-20 15:36:09,636-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:10,347-TEST.GRU-INFO-RNN incurred a loss of 3.721879 after 15 epochs
+2017-03-20 15:36:10,359-TEST.GRU-INFO-Training the model: epoch 16
+2017-03-20 15:36:12,729-TEST.GRU-INFO-Evaluating loss: epoch 16
+2017-03-20 15:36:12,729-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:13,425-TEST.GRU-INFO-RNN incurred a loss of 3.719004 after 16 epochs
+2017-03-20 15:36:13,436-TEST.GRU-INFO-Training the model: epoch 17
+2017-03-20 15:36:15,809-TEST.GRU-INFO-Evaluating loss: epoch 17
+2017-03-20 15:36:15,809-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:16,524-TEST.GRU-INFO-RNN incurred a loss of 3.716459 after 17 epochs
+2017-03-20 15:36:16,536-TEST.GRU-INFO-Training the model: epoch 18
+2017-03-20 15:36:18,929-TEST.GRU-INFO-Evaluating loss: epoch 18
+2017-03-20 15:36:18,929-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:19,644-TEST.GRU-INFO-RNN incurred a loss of 3.714158 after 18 epochs
+2017-03-20 15:36:19,654-TEST.GRU-INFO-Training the model: epoch 19
+2017-03-20 15:36:22,028-TEST.GRU-INFO-Evaluating loss: epoch 19
+2017-03-20 15:36:22,028-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:22,727-TEST.GRU-INFO-RNN incurred a loss of 3.712037 after 19 epochs
+2017-03-20 15:36:22,738-TEST.GRU-INFO-Training the model: epoch 20
+2017-03-20 15:36:25,110-TEST.GRU-INFO-Evaluating loss: epoch 20
+2017-03-20 15:36:25,110-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:25,810-TEST.GRU-INFO-RNN incurred a loss of 3.710047 after 20 epochs
+2017-03-20 15:36:25,821-TEST.GRU-INFO-Training the model: epoch 21
+2017-03-20 15:36:28,193-TEST.GRU-INFO-Evaluating loss: epoch 21
+2017-03-20 15:36:28,193-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:28,909-TEST.GRU-INFO-RNN incurred a loss of 3.708155 after 21 epochs
+2017-03-20 15:36:28,921-TEST.GRU-INFO-Training the model: epoch 22
+2017-03-20 15:36:31,297-TEST.GRU-INFO-Evaluating loss: epoch 22
+2017-03-20 15:36:31,297-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:31,997-TEST.GRU-INFO-RNN incurred a loss of 3.706335 after 22 epochs
+2017-03-20 15:36:32,008-TEST.GRU-INFO-Training the model: epoch 23
+2017-03-20 15:36:34,382-TEST.GRU-INFO-Evaluating loss: epoch 23
+2017-03-20 15:36:34,382-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:35,082-TEST.GRU-INFO-RNN incurred a loss of 3.704569 after 23 epochs
+2017-03-20 15:36:35,093-TEST.GRU-INFO-Training the model: epoch 24
+2017-03-20 15:36:37,468-TEST.GRU-INFO-Evaluating loss: epoch 24
+2017-03-20 15:36:37,468-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:38,168-TEST.GRU-INFO-RNN incurred a loss of 3.702844 after 24 epochs
+2017-03-20 15:36:38,180-TEST.GRU-INFO-Training the model: epoch 25
+2017-03-20 15:36:40,558-TEST.GRU-INFO-Evaluating loss: epoch 25
+2017-03-20 15:36:40,558-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:41,275-TEST.GRU-INFO-RNN incurred a loss of 3.701149 after 25 epochs
+2017-03-20 15:36:41,286-TEST.GRU-INFO-Training the model: epoch 26
+2017-03-20 15:36:43,661-TEST.GRU-INFO-Evaluating loss: epoch 26
+2017-03-20 15:36:43,661-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:44,360-TEST.GRU-INFO-RNN incurred a loss of 3.699475 after 26 epochs
+2017-03-20 15:36:44,371-TEST.GRU-INFO-Training the model: epoch 27
+2017-03-20 15:36:46,747-TEST.GRU-INFO-Evaluating loss: epoch 27
+2017-03-20 15:36:46,747-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:47,462-TEST.GRU-INFO-RNN incurred a loss of 3.697817 after 27 epochs
+2017-03-20 15:36:47,473-TEST.GRU-INFO-Training the model: epoch 28
+2017-03-20 15:36:49,843-TEST.GRU-INFO-Evaluating loss: epoch 28
+2017-03-20 15:36:49,843-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:50,545-TEST.GRU-INFO-RNN incurred a loss of 3.696168 after 28 epochs
+2017-03-20 15:36:50,556-TEST.GRU-INFO-Training the model: epoch 29
+2017-03-20 15:36:52,931-TEST.GRU-INFO-Evaluating loss: epoch 29
+2017-03-20 15:36:52,931-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:53,628-TEST.GRU-INFO-RNN incurred a loss of 3.694524 after 29 epochs
+2017-03-20 15:36:53,640-TEST.GRU-INFO-Training the model: epoch 30
+2017-03-20 15:36:56,011-TEST.GRU-INFO-Evaluating loss: epoch 30
+2017-03-20 15:36:56,011-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:56,710-TEST.GRU-INFO-RNN incurred a loss of 3.692882 after 30 epochs
+2017-03-20 15:36:56,721-TEST.GRU-INFO-Training the model: epoch 31
+2017-03-20 15:36:59,096-TEST.GRU-INFO-Evaluating loss: epoch 31
+2017-03-20 15:36:59,097-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:36:59,813-TEST.GRU-INFO-RNN incurred a loss of 3.691238 after 31 epochs
+2017-03-20 15:36:59,824-TEST.GRU-INFO-Training the model: epoch 32
+2017-03-20 15:37:02,199-TEST.GRU-INFO-Evaluating loss: epoch 32
+2017-03-20 15:37:02,199-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:02,899-TEST.GRU-INFO-RNN incurred a loss of 3.689589 after 32 epochs
+2017-03-20 15:37:02,910-TEST.GRU-INFO-Training the model: epoch 33
+2017-03-20 15:37:05,284-TEST.GRU-INFO-Evaluating loss: epoch 33
+2017-03-20 15:37:05,284-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:05,980-TEST.GRU-INFO-RNN incurred a loss of 3.687934 after 33 epochs
+2017-03-20 15:37:05,992-TEST.GRU-INFO-Training the model: epoch 34
+2017-03-20 15:37:08,364-TEST.GRU-INFO-Evaluating loss: epoch 34
+2017-03-20 15:37:08,364-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:09,064-TEST.GRU-INFO-RNN incurred a loss of 3.686270 after 34 epochs
+2017-03-20 15:37:09,076-TEST.GRU-INFO-Training the model: epoch 35
+2017-03-20 15:37:11,452-TEST.GRU-INFO-Evaluating loss: epoch 35
+2017-03-20 15:37:11,452-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:12,150-TEST.GRU-INFO-RNN incurred a loss of 3.684598 after 35 epochs
+2017-03-20 15:37:12,161-TEST.GRU-INFO-Training the model: epoch 36
+2017-03-20 15:37:14,534-TEST.GRU-INFO-Evaluating loss: epoch 36
+2017-03-20 15:37:14,534-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:15,234-TEST.GRU-INFO-RNN incurred a loss of 3.682916 after 36 epochs
+2017-03-20 15:37:15,246-TEST.GRU-INFO-Training the model: epoch 37
+2017-03-20 15:37:17,619-TEST.GRU-INFO-Evaluating loss: epoch 37
+2017-03-20 15:37:17,619-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:18,315-TEST.GRU-INFO-RNN incurred a loss of 3.681222 after 37 epochs
+2017-03-20 15:37:18,327-TEST.GRU-INFO-Training the model: epoch 38
+2017-03-20 15:37:20,701-TEST.GRU-INFO-Evaluating loss: epoch 38
+2017-03-20 15:37:20,701-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:21,400-TEST.GRU-INFO-RNN incurred a loss of 3.679518 after 38 epochs
+2017-03-20 15:37:21,411-TEST.GRU-INFO-Training the model: epoch 39
+2017-03-20 15:37:23,786-TEST.GRU-INFO-Evaluating loss: epoch 39
+2017-03-20 15:37:23,786-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:24,485-TEST.GRU-INFO-RNN incurred a loss of 3.677803 after 39 epochs
+2017-03-20 15:37:24,496-TEST.GRU-INFO-Training the model: epoch 40
+2017-03-20 15:37:26,867-TEST.GRU-INFO-Evaluating loss: epoch 40
+2017-03-20 15:37:26,867-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:27,568-TEST.GRU-INFO-RNN incurred a loss of 3.676077 after 40 epochs
+2017-03-20 15:37:27,580-TEST.GRU-INFO-Training the model: epoch 41
+2017-03-20 15:37:29,957-TEST.GRU-INFO-Evaluating loss: epoch 41
+2017-03-20 15:37:29,957-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:30,658-TEST.GRU-INFO-RNN incurred a loss of 3.674340 after 41 epochs
+2017-03-20 15:37:30,669-TEST.GRU-INFO-Training the model: epoch 42
+2017-03-20 15:37:33,045-TEST.GRU-INFO-Evaluating loss: epoch 42
+2017-03-20 15:37:33,046-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:33,745-TEST.GRU-INFO-RNN incurred a loss of 3.672593 after 42 epochs
+2017-03-20 15:37:33,756-TEST.GRU-INFO-Training the model: epoch 43
+2017-03-20 15:37:36,132-TEST.GRU-INFO-Evaluating loss: epoch 43
+2017-03-20 15:37:36,133-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:36,831-TEST.GRU-INFO-RNN incurred a loss of 3.670836 after 43 epochs
+2017-03-20 15:37:36,842-TEST.GRU-INFO-Training the model: epoch 44
+2017-03-20 15:37:39,220-TEST.GRU-INFO-Evaluating loss: epoch 44
+2017-03-20 15:37:39,220-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:39,934-TEST.GRU-INFO-RNN incurred a loss of 3.669069 after 44 epochs
+2017-03-20 15:37:39,945-TEST.GRU-INFO-Training the model: epoch 45
+2017-03-20 15:37:42,320-TEST.GRU-INFO-Evaluating loss: epoch 45
+2017-03-20 15:37:42,321-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:43,019-TEST.GRU-INFO-RNN incurred a loss of 3.667293 after 45 epochs
+2017-03-20 15:37:43,031-TEST.GRU-INFO-Training the model: epoch 46
+2017-03-20 15:37:45,406-TEST.GRU-INFO-Evaluating loss: epoch 46
+2017-03-20 15:37:45,406-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:46,118-TEST.GRU-INFO-RNN incurred a loss of 3.665508 after 46 epochs
+2017-03-20 15:37:46,129-TEST.GRU-INFO-Training the model: epoch 47
+2017-03-20 15:37:48,507-TEST.GRU-INFO-Evaluating loss: epoch 47
+2017-03-20 15:37:48,507-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:49,203-TEST.GRU-INFO-RNN incurred a loss of 3.663715 after 47 epochs
+2017-03-20 15:37:49,215-TEST.GRU-INFO-Training the model: epoch 48
+2017-03-20 15:37:51,591-TEST.GRU-INFO-Evaluating loss: epoch 48
+2017-03-20 15:37:51,591-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:52,291-TEST.GRU-INFO-RNN incurred a loss of 3.661914 after 48 epochs
+2017-03-20 15:37:52,302-TEST.GRU-INFO-Training the model: epoch 49
+2017-03-20 15:37:54,674-TEST.GRU-INFO-Evaluating loss: epoch 49
+2017-03-20 15:37:54,674-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:55,375-TEST.GRU-INFO-RNN incurred a loss of 3.660105 after 49 epochs
+2017-03-20 15:37:55,386-TEST.GRU-INFO-Training the model: epoch 50
+2017-03-20 15:37:57,759-TEST.GRU-INFO-Evaluating loss: epoch 50
+2017-03-20 15:37:57,759-TEST.GRU-INFO-Calculating average categorical crossentropy loss...
+2017-03-20 15:37:58,473-TEST.GRU-INFO-RNN incurred a loss of 3.658289 after 50 epochs
+2017-03-20 15:37:58,484-TEST.GRU-INFO-Finished training the rnn for 50 epochs, with a final loss of 3.658289. Training took 2.59 m
+2017-03-20 15:37:58,484-TEST.GRU-INFO-Plotting a graph of loss vs iteration
+2017-03-20 15:37:58,667-TEST-INFO-Generating stories
+2017-03-20 15:44:53,886-TEST-INFO-Generated 25 stories after 25 attempts.
+2017-03-20 15:44:53,887-TEST-INFO-65.226780 percent of the words generated were unknown tokens.
